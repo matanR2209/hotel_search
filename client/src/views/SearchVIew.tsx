@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, StyleRulesCallback, TextField, Theme, withStyles} from "@material-ui/core";
+import {Button, StyleRulesCallback, Theme, withStyles} from "@material-ui/core";
 import {stores} from "../state";
 import {IHotelRequestBody} from "../interfaces/HTTP";
 import HSDropDown from "../components/HSDropDown";
@@ -7,7 +7,6 @@ import Utils from "../utils/Utils";
 import SITES from "../assets/SITES_LIST";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Search from '@mui/icons-material/Search';
 
 interface IProps {
     classes: any

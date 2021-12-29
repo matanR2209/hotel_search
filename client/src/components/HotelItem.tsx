@@ -1,6 +1,7 @@
 import React from "react";
 import {Button, StyleRulesCallback, Theme, withStyles} from "@material-ui/core";
 import {IAccommodation} from "../interfaces/Hotels";
+import ColorsPalette from "../assets/Colors";
 
 interface IProps {
     classes: any;
@@ -11,7 +12,7 @@ const styles: StyleRulesCallback<any, any> = (theme: Theme) => ({
         display: "flex",
         margin: "auto",
         flexDirection: "row",
-        marginBottom: "1em",
+        marginBottom: "1.5em",
         width: "100%",
         boxShadow: "4px 4px 11px 3px rgba(0,0,0,0.7)",
         borderRadius: 10,
@@ -22,11 +23,11 @@ const styles: StyleRulesCallback<any, any> = (theme: Theme) => ({
     },
     hotelInfoContainer: {
         width: "34%",
-        backgroundColor: "#FFF"
+        backgroundColor: ColorsPalette.white
     },
     hotelPriceContainer: {
         width: "33%",
-        backgroundColor: "#F5F5F5",
+        backgroundColor: ColorsPalette.lightGrey,
         borderBottomRightRadius: 10,
         borderTopRightRadius: 10,
 
@@ -76,7 +77,6 @@ const styles: StyleRulesCallback<any, any> = (theme: Theme) => ({
     }
 });
 
-
 function HotelItem(props: IProps) {
     const { classes, hotel } = props;
 
@@ -109,17 +109,21 @@ function HotelItem(props: IProps) {
         </div>)
     }
 
+    const renderHotelPriceSection = () => {
+        return (<div className={classes.hotelPriceContainer}>
+            <div className={classes.hotelPrice}>
+                <div className={classes.price}>$ {hotel.PricesInfo.AmountBeforeTax}</div>
+                <div>Total price per person</div>
+                <div className={classes.buttonContainer}><Button variant={"contained"} color={"primary"}>View details</Button></div>
+            </div>
+        </div>)
+    }
+
     return (
         <div className={classes.hotelItemContainer}>
             {renderHotelImage()}
             {renderHotelInfo()}
-                <div className={classes.hotelPriceContainer}>
-                    <div className={classes.hotelPrice}>
-                        <div className={classes.price}>$ {hotel.PricesInfo.AmountBeforeTax}</div>
-                        <div>Total price per person</div>
-                        <div className={classes.buttonContainer}><Button variant={"contained"} color={"primary"}>View details</Button></div>
-                    </div>
-                </div>
+            {renderHotelPriceSection()}
         </div>
     );
 }

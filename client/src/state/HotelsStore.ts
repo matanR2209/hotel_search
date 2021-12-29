@@ -1,4 +1,4 @@
-import {action, computed, observable} from "mobx";
+import {computed, observable} from "mobx";
 import {IHotelRequestBody} from "../interfaces/HTTP";
 import HotelsApiService from "../services/HotelsApiService/HotelsApiService";
 import {IAccommodation} from "../interfaces/Hotels";
@@ -16,14 +16,15 @@ export default class HotelsStore {
             params.query.group_size = i;
             promises.push(this.fetchAndUpdateGroup(params))
         }
-        return Promise.all(promises)
+        return Promise.all(promises).then(() => this.isHotelsLoading = false)
+
     }
 
     private async fetchAndUpdateGroup(params: IHotelRequestBody) {
         // setTimeout(async () => {
-        // },  params.query.group_size * 1000);
             let continuousHotelResponse = await HotelsApiService.getAvailableHotels(params);
             this._hotels.push(...continuousHotelResponse);
+        // },  params.query.group_size * 1000);
     }
 
     @computed

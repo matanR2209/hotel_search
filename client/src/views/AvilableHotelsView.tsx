@@ -1,10 +1,9 @@
 import React from "react";
 import {StyleRulesCallback, Theme, withStyles} from "@material-ui/core";
-import {IAccommodation} from "../interfaces/Hotels";
 import {stores} from "../state";
 import HotelItem from "../components/HotelItem";
 import {Observer} from "mobx-react";
-import Loader from "../components/Loader";
+import HSLoader from "../components/HSLoader";
 
 interface IProps {
     classes: any;
@@ -18,6 +17,10 @@ const styles: StyleRulesCallback<any, any> = (theme: Theme) => ({
         width: "60%",
         margin: " 2em auto",
         alignContent: "center"
+    },
+    loaderContainer: {
+        display: "flex",
+        margin: "auto"
     }
 });
 
@@ -34,11 +37,12 @@ function AvailableHotelsView(props: IProps) {
             {() => {
                 return (<div className={classes.AvailableHotelsContainer}>
                     {sortHotelsByPrice().map((hotel, index)=> <HotelItem key={index} hotel={hotel}/>)}
-                    {hotelsStore.isHotelsLoading? <Loader/> : null}
+                    {hotelsStore.isHotelsLoading? <div className={classes.loaderContainer}><HSLoader/></div> : null}
                 </div>)
             }}
         </Observer>
     );
 }
+
 
 export default withStyles(styles)(AvailableHotelsView);

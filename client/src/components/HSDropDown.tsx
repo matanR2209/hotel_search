@@ -1,6 +1,5 @@
 import React from "react";
 import {InputLabel, MenuItem, Select, StyleRulesCallback, Theme, withStyles} from "@material-ui/core";
-import {IAccommodation} from "../interfaces/Hotels";
 
 interface IProps {
     classes: any;
