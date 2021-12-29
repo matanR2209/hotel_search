@@ -21,7 +21,7 @@ function HSDropDown(props: IProps) {
                     label={label}
                     onChange={handleChange}
                 >
-                    {items.map(item => <MenuItem value={item}>{`${item}`}</MenuItem>)}
+                    {items.map(item => <MenuItem key={value} value={item}>{`${item}`}</MenuItem>)}
                 </Select>
             </>
     );

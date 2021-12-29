@@ -17,7 +17,6 @@ export default class HotelsStore {
             promises.push(this.fetchAndUpdateGroup(params))
         }
         return Promise.all(promises).then(() => this.isHotelsLoading = false)
-
     }
 
     private async fetchAndUpdateGroup(params: IHotelRequestBody) {
