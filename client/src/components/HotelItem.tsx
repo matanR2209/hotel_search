@@ -10,52 +10,69 @@ const styles: StyleRulesCallback<any, any> = (theme: Theme) => ({
     hotelItemContainer: {
         display: "flex",
         margin: "auto",
-        flexWrap: "wrap",
         flexDirection: "row",
-        justifyContent: "space-between",
         marginBottom: "1em",
         width: "100%",
-        boxShadow: "0 2px 4px 0 rgba(226, 230, 236, 0.5)",
+        boxShadow: "4px 4px 11px 3px rgba(0,0,0,0.7)",
+        borderRadius: 10,
+        fontSize: 12
     },
-    gridItem: {
-        flex: "1 0 30%",
+    hotelImageContainer: {
+        width: "33%"
     },
+    hotelInfoContainer: {
+        width: "34%",
+        backgroundColor: "#FFF"
+    },
+    hotelPriceContainer: {
+        width: "33%",
+        backgroundColor: "#F5F5F5",
+        borderBottomRightRadius: 10,
+        borderTopRightRadius: 10,
+
+},
     hotelInfo: {
-        fontSize: 12,
-        backgroundColor: "#FFF",
-        height: "100%",
-        paddingLeft: "1em"
+        marginTop: "1em",
+        marginLeft: ".5em"
     },
     hotelName: {
+        fontSize: 16,
         fontWeight: "bold",
-        marginBottom: ".5em",
-        paddingTop: "1em"
+        marginBottom: ".2em"
     },
-    hotelRank: {
+    hotelRankContainer: {
+            display: "flex",
+            flexDirection: "row"
+    },
+    hotelStart: {
+        marginLeft: "1em",
         display: "flex",
         flexDirection: "row"
     },
-    hotelStart: {
-        marginLeft: ".5em"
+    startContainer: {
+      color: "gold",
+      marginRight: ".3em",
+      fontSize: 18
+    },
+    hotelLocation: {
+        fontSize: 10
     },
     hotelPrice: {
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        marginTop: "auto",
-        textAlign: "end",
-        backgroundColor: "lightGrey",
-        height: "100%",
-        justifyContent: "end",
-        paddingRight: "1em"
+        justifyContent: "flex-end",
+        alignItems: "end",
+        marginRight: "1em",
     },
     price: {
-        color: "red",
+        fontSize: 22,
         fontWeight: "bold",
-        fontSize: 20,
-        marginBottom: ".2em"
+        color: "red"
     },
-    detailsButtonContainer: {
-        margin:  ".5em 0"
+    buttonContainer: {
+        fontSize: 10,
+        margin: ".5em 0"
     }
 });
 
@@ -68,34 +85,41 @@ function HotelItem(props: IProps) {
     }
 
     const renderHotelStars = () => {
-        return "****"
+        return Array.from(Array(parseInt(hotel.HotelInfo.Rating)), (_, index) => index + 1).map(star => <div className={classes.startContainer}> * </div>)
     }
+
+    const renderHotelImage = () => {
+        return (<div className={classes.hotelImageContainer}>
+                <img style={{height: "100%", width: "100%", borderBottomLeftRadius: 10, borderTopLeftRadius: 10}} alt={"hotel main image "} src={getHotelMainImage().URL}/>
+            </div>)
+    }
+
+    const renderHotelInfo = () => {
+        return ( <div className={classes.hotelInfoContainer}>
+            <div className={classes.hotelInfo}>
+                <div className={classes.hotelName}>{hotel.HotelName}</div>
+                <div className={classes.hotelRankContainer}>
+                    <div>{hotel.HotelCode}</div>
+                    <div className={classes.hotelStart}>{renderHotelStars()}</div>
+                </div>
+                <div className={classes.hotelLocation}>
+                    <div>{hotel.HotelCode} | HOTEL_LOCATION</div>
+                </div>
+            </div>
+        </div>)
+    }
+
     return (
         <div className={classes.hotelItemContainer}>
-            <div className={classes.gridItem}>
-                <img style={{height: "auto", width: "100%"}} alt={"hotel main image "} src={getHotelMainImage().URL}/>
-            </div>
-            <div className={classes.gridItem}>
-                <div className={classes.hotelInfo}>
-                    <div className={classes.hotelName}>{hotel.HotelName}</div>
-                    <div className={classes.hotelRank}>
-                        <div>{hotel.HotelCode}</div>
-                        <div className={classes.hotelStart}>{renderHotelStars()}</div>
-                    </div>
-                    <div className={classes.hotelLocation}>
-                        <div>{hotel.HotelCode} | HOTEL_LOCATION</div>
+            {renderHotelImage()}
+            {renderHotelInfo()}
+                <div className={classes.hotelPriceContainer}>
+                    <div className={classes.hotelPrice}>
+                        <div className={classes.price}>$ {hotel.PricesInfo.AmountBeforeTax}</div>
+                        <div>Total price per person</div>
+                        <div className={classes.buttonContainer}><Button variant={"contained"} color={"primary"}>View details</Button></div>
                     </div>
                 </div>
-            </div>
-            <div className={classes.gridItem}>
-                <div className={classes.hotelPrice}>
-                    <div className={classes.price}>$ {hotel.PricesInfo.AmountBeforeTax}</div>
-                    <div>Total price per person</div>
-                    <div className={classes.detailsButtonContainer}><Button variant={"contained"} color={"primary"}>View details</Button></div>
-                </div>
-
-            </div>
-
         </div>
     );
 }

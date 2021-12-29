@@ -8,19 +8,22 @@ export default class HotelsStore {
     @observable public isHotelsLoading: boolean = false;
 
     public async fetchHotels (params: IHotelRequestBody) {
-        this.isHotelsLoading = true;
         this._hotels = [];
-        const hotelsResponse = await HotelsApiService.getAvailableHotels(params);
-        this._hotels = hotelsResponse;
+        this.isHotelsLoading = true;
         let initialRequestGroupSize = params.query.group_size;
-        for(let i = initialRequestGroupSize; i < initialRequestGroupSize + 2; i++) {
-            let updatedParams = params;
-            updatedParams.query.group_size = i;
+        const promises: Promise<any>[] = []
+        for(let i = initialRequestGroupSize; i < initialRequestGroupSize + 3; i++) {
             params.query.group_size = i;
-            let continuousHotelResponse = await HotelsApiService.getAvailableHotels(updatedParams);
-            this._hotels = [...this._hotels, ...continuousHotelResponse];
+            promises.push(this.fetchAndUpdateGroup(params))
         }
-        this.isHotelsLoading = false;
+        return Promise.all(promises)
+    }
+
+    private async fetchAndUpdateGroup(params: IHotelRequestBody) {
+        // setTimeout(async () => {
+        // },  params.query.group_size * 1000);
+            let continuousHotelResponse = await HotelsApiService.getAvailableHotels(params);
+            this._hotels.push(...continuousHotelResponse);
     }
 
     @computed

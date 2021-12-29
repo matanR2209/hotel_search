@@ -36,7 +36,6 @@ function AvailableHotelsView(props: IProps) {
                     {sortHotelsByPrice().map((hotel, index)=> <HotelItem key={index} hotel={hotel}/>)}
                     {hotelsStore.isHotelsLoading? <Loader/> : null}
                 </div>)
-
             }}
         </Observer>
     );
